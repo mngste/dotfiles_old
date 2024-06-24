@@ -9,17 +9,17 @@ TERM = "xterm-256color"
 size = 12.0
 
 [font.bold]
-#family = "MesloLGS Nerd Font Mono"
-#style = "Bold"
+family = "MesloLGM Nerd Font Mono"
+style = "Bold"
 
 [font.bold_italic]
-#family = "MesloLGS Nerd Font Mono"
-#style = "Bold Italic"
+family = "MesloLGM Nerd Font Mono"
+style = "Bold Italic"
 
 [font.italic]
-#family = "MesloLGS Nerd Font Mono"
-#style = "Italic"
+family = "MesloLGM Nerd Font Mono"
+style = "Italic"
 
 [font.normal]
-#family = "MesloLGS Nerd Font Mono"
-#style = "Regular"
+family = "MesloLGM Nerd Font Mono"
+style = "Regular"
