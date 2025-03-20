@@ -29,9 +29,10 @@ return {
 
     require('mason-lspconfig').setup({
       ensure_installed = {
-        "tsserver",
+        "ts_ls",
         "lua_ls",
-        "ruff"
+        "ruff",
+        "rust_analyzer"
       },
       handlers = {
         function(server_name)
