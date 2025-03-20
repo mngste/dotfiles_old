@@ -80,12 +80,13 @@ wk.add(non_lsp_mappings)
 -- Telescope Commands
 
 local telescope_mappings = {
-  { "ff",  builtin.find_files, desc = "Find Files" },
-  { "fg",  builtin.git_files, desc = "Find git files" },
-  { "fl",  builtin.live_grep, desc = "Live grep" },
+  { "<leader>f", group = "file" }, -- group
+  { "<leader>ff",  builtin.find_files, desc = "Find Files" },
+  { "<leader>fg",  builtin.git_files, desc = "Find git files" },
+  { "<leader>fl",  builtin.live_grep, desc = "Live grep" },
 }
 
-wk.add(telescope_mappings, { prefix = "<leader>" })
+wk.add(telescope_mappings)
 
 -- Register the semicolon mapping separately as it doesn't use the leader prefix
 wk.add({
