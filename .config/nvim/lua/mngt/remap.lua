@@ -51,19 +51,17 @@ vim.api.nvim_create_autocmd('LspAttach', {
 })
 
 local non_lsp_mappings = {
-  ["<leader>"] = {
-    e = { vim.cmd.Ex, "Open file explorer" },
-    p = { "\"_dP", "Paste without overwrite" },
-    ["/"] = { "<Plug>(comment_toggle_linewise_current)", "Toggle comment" },
-    s = { [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], "Search and replace word under cursor" },
-    t = { ":Today<CR>", "Open today's note" },
-  },
-  J = { "mzJ`z", "Join lines and keep cursor position" },
-  ["<C-d>"] = { "<C-d>zz", "Half page down and center" },
-  ["<C-u>"] = { "<C-u>zz", "Half page up and center" },
-  n = { "nzzzv", "Next search result and center" },
-  N = { "Nzzzv", "Previous search result and center" },
-  Q = { "<nop>", "Disable Ex mode" },
+  { "<leader>e", vim.cmd.Ex, desc = "Open file explorer" },
+  { "<leader>p", "\"_dP", desc = "Paste without overwrite" },
+  { "<leader>/", "<Plug>(comment_toggle_linewise_current)", desc = "Toggle comment" },
+  { "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], desc = "Search and replace word under cursor" },
+  { "<leader>t", ":Today<CR>", desc = "Open today's note" },
+  { "J", "mzJ`z", desc = "Join lines and keep cursor position" },
+  { ["<C-d>"], "<C-d>zz", desc = "Half page down and center" },
+  { ["<C-u>"], "<C-u>zz", desc = "Half page up and center" },
+  { "n", "nzzzv", desc = "Next search result and center" },
+  { "N", "Nzzzv", desc = "Previous search result and center" },
+  { "Q", "<nop>", desc = "Disable Ex mode" },
 }
 
 wk.add(non_lsp_mappings)
