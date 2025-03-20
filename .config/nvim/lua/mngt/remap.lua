@@ -77,16 +77,19 @@ wk.add(non_lsp_mappings)
 -- vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
 -- vim.keymap.set("n", "<leader>t", ":Today<CR>")
 
+-- Telescope Commands
+
+local telescope_mappings = {
+  { "ff",  builtin.find_files, desc = "Find Files" },
+  { "fg",  builtin.git_files, desc = "Find git files" },
+  { "fl",  builtin.live_grep, desc = "Live grep" },
+}
+
+wk.add(telescope_mappings, { prefix = "<leader>" })
+
+-- Register the semicolon mapping separately as it doesn't use the leader prefix
 wk.add({
-  { "<leader>f", group = "file" }, -- group
-  { "<leader>ff", "<cmd>Telescope find_files<cr>", desc = "Find File", mode = "n" },
-  { "<leader>fb", function() print("hello") end, desc = "Foobar" },
-  { "<leader>fn", desc = "New File" },
-  { "<leader>f1", hidden = true }, -- hide this keymap
-  { "<leader>w", proxy = "<c-w>", group = "windows" }, -- proxy to window mappings
-  { "<leader>b", group = "buffers", expand = function()
-      return require("which-key.extras").expand.buf()
-    end
+    { ";", builtin.buffers, desc = "Find buffers" },
   },
   {
     -- Nested mappings are allowed and can be added in any order
@@ -96,6 +99,37 @@ wk.add({
     { "<leader>q", "<cmd>q<cr>", desc = "Quit" }, -- no need to specify mode since it's inherited
     { "<leader>w", "<cmd>w<cr>", desc = "Write" },
   }
-})
+)
+
+-- vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
+-- vim.keymap.set('n', '<leader>fg', builtin.git_files, {})
+-- vim.keymap.set('n', '<leader>fl', builtin.live_grep, {})
+-- vim.keymap.set('n', ';', builtin.buffers, {})
 
 
+
+-- Use move command while highlighted to move text
+-- vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
+-- vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
+
+-- vim.keymap.set("v", "<leader>/", "<Plug>(comment_toggle_linewise_visual)")
+
+local visual_mappings = {
+  { "J", ":m '>+1<CR>gv=gv", desc =  "Move selection down"},
+  { "K", ":m '<-2<CR>gv=gv", desc =  "Move selection up"},
+  { "<leader>/", "<Plug>(comment_toggle_linewise_visual)", desc =  "Toggle comment"},
+}
+
+wk.add(visual_mappings, { mode = "v" })
+
+--- Don't overwrite pastes in visual mode
+-- vim.keymap.set("x", "<leader>p", "\"_dP")
+
+
+-- Format command
+-- vim.keymap.set("n", "<leader>f", function()
+-- vim.lsp.buf.format()
+-- end)
+
+-- insert commands
+vim.keymap.set('i', '<Right>', '<Right>', { noremap = true }) -- Make the right arrow behave normally in insert mode
