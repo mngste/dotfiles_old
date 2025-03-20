@@ -26,7 +26,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
       ["]d"] = { vim.diagnostic.goto_prev, "Go to previous diagnostic" },
     }
 
-    which_key.add(mappings, opts)
+    wk.add(mappings, opts)
 
     -- vim.keymap.set('n', 'gd', function() vim.lsp.buf.definition() end, opts)
     -- vim.keymap.set('n', 'K', function() vim.lsp.buf.hover() end, opts)
@@ -66,7 +66,7 @@ local non_lsp_mappings = {
   Q = { "<nop>", "Disable Ex mode" },
 }
 
-which_key.add(non_lsp_mappings)
+wk.add(non_lsp_mappings)
 
 -- vim.keymap.set("n", "<leader>e", vim.cmd.Ex)
 -- vim.keymap.set("n", "J", "mzJ`z")       -- Keep cursor in same position on line join
