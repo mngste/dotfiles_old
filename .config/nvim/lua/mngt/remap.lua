@@ -50,6 +50,35 @@ vim.api.nvim_create_autocmd('LspAttach', {
   end,
 })
 
+local non_lsp_mappings = {
+  ["<leader>"] = {
+    e = { vim.cmd.Ex, "Open file explorer" },
+    p = { "\"_dP", "Paste without overwrite" },
+    ["/"] = { "<Plug>(comment_toggle_linewise_current)", "Toggle comment" },
+    s = { [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], "Search and replace word under cursor" },
+    t = { ":Today<CR>", "Open today's note" },
+  },
+  J = { "mzJ`z", "Join lines and keep cursor position" },
+  ["<C-d>"] = { "<C-d>zz", "Half page down and center" },
+  ["<C-u>"] = { "<C-u>zz", "Half page up and center" },
+  n = { "nzzzv", "Next search result and center" },
+  N = { "Nzzzv", "Previous search result and center" },
+  Q = { "<nop>", "Disable Ex mode" },
+}
+
+which_key.add(non_lsp_mappings)
+
+-- vim.keymap.set("n", "<leader>e", vim.cmd.Ex)
+-- vim.keymap.set("n", "J", "mzJ`z")       -- Keep cursor in same position on line join
+-- vim.keymap.set("n", "<C-d>", "<C-d>zz") -- Keep cursor in middle on half page jump down
+-- vim.keymap.set("n", "<C-u>", "<C-u>zz") -- Keep cursor in middle on half page jump down
+-- vim.keymap.set("n", "n", "nzzzv")       -- Keep searched term in middle
+-- vim.keymap.set("n", "N", "Nzzzv")       -- Keep reverse searched term in middle
+-- vim.keymap.set("n", "Q", "<nop>")       --- Just undo capital Q support
+-- vim.keymap.set("n", "<leader>/", "<Plug>(comment_toggle_linewise_current)")
+-- vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
+-- vim.keymap.set("n", "<leader>t", ":Today<CR>")
+
 wk.add({
   { "<leader>f", group = "file" }, -- group
   { "<leader>ff", "<cmd>Telescope find_files<cr>", desc = "Find File", mode = "n" },
