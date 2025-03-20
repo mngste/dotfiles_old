@@ -7,23 +7,17 @@ vim.api.nvim_create_autocmd('LspAttach', {
     local opts = { buffer = event.buf }
 
     local mappings = {
-      g = {
-        d = { vim.lsp.buf.definition, "Go to definition" },
-        l = { vim.diagnostic.open_float, "Open diagnostic float" },
-      },
-      K = { vim.lsp.buf.hover, "Show hover information" },
-      ["<leader>"] = {
-        l = {
-          name = "LSP",
-          a = { vim.lsp.buf.code_action, "Code action" },
-          r = { vim.lsp.buf.references, "References" },
-          n = { vim.lsp.buf.rename, "Rename" },
-          w = { vim.lsp.buf.workspace_symbol, "Workspace symbol" },
-          d = { vim.diagnostic.open_float, "Open diagnostic float" },
-        },
-      },
-      ["[d"] = { vim.diagnostic.goto_next, "Go to next diagnostic" },
-      ["]d"] = { vim.diagnostic.goto_prev, "Go to previous diagnostic" },
+      { "gd", vim.lsp.buf.definition, desc = "Go to definition" },
+      { "gl", vim.diagnostic.open_float, desc = "Open diagnostic float" },
+      { "K", vim.lsp.buf.hover, desc = "Show hover information" },
+      { "[d", vim.diagnostic.goto_next, desc = "Go to next diagnostic" },
+      { "]d", vim.diagnostic.goto_prev, desc = "Go to previous diagnostic" },
+      { "<leader>l", group = "LSP" },
+      { "<leader>la", vim.lsp.buf.code_action, desc = "Code action" },
+      { "<leader>lr", vim.lsp.buf.references, desc = "References" },
+      { "<leader>ln", vim.lsp.buf.rename, desc = "Rename" },
+      { "<leader>lw", vim.lsp.buf.workspace_symbol, desc = "Workspace symbol" },
+      { "<leader>ld", vim.diagnostic.open_float, desc = "Open diagnostic float" },
     }
 
     wk.add(mappings, opts)
