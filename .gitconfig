@@ -33,6 +33,7 @@
 [user]
   name = mngste
   email = mangouste@mosaurus.com
+	signinkey = /data/data/com.termux/files/home/.ssh/id_ed25519.pub
 
 # Help with typos
 [help]
@@ -57,7 +58,9 @@
 
 # GPG settings for SSH signing
 [gpg]
-  format = ssh
+	format = ssh
 
 [commit]
   gpgsign = true
+[tag]
+	gpgsign = true

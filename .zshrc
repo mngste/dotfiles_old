@@ -15,7 +15,7 @@ fi
 export ZSH="$HOME/.oh-my-zsh"
 
 # Theme config - fixed syntax
-ZSH_THEME="spaceship"
+ZSH_THEME="cloud"
 
 # Spaceship settings (fixed syntax)
 SPACESHIP_PROMPT_ASYNC=true
