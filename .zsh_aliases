@@ -1,0 +1,31 @@
+# Aliases to use with Global Alias
+#------------------------------------------------------
+# Automatically Expanding Global Aliases (Space key to expand)
+# references: http://blog.patshead.com/2012/11/automatically-expaning-zsh-global-aliases---simplified.html
+# video: https://www.youtube.com/watch?v=WTTIGjZAMGg
+# import this file into the .zshrc fie with '. ~/.zsh_aliases'
+
+# file shit
+alias -g rmrf='rm -rf '
+
+# kill port
+alias -g kill='npx kill-port '
+alias -g killp='pnpx kill-port '
+
+# tree
+alias -g tdl="tree -a -I 'node_modules|.svelte-kit|.git' --dirsfirst"
+
+# direnv
+alias -g di='echo dotenv > .envrc && touch .env && direnv allow'
+
+# navigation
+alias -g c='code .'
+alias -g s='cursor .'
+alias -g e=exit
+alias -g ls='ls -lart'
+alias -g la='ls -la'
+
+
+
+
+
