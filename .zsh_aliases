@@ -19,8 +19,6 @@ alias -g tdl="tree -a -I 'node_modules|.svelte-kit|.git' --dirsfirst"
 alias -g di='echo dotenv > .envrc && touch .env && direnv allow'
 
 # navigation
-alias -g c='code .'
-alias -g s='cursor .'
 alias -g e=exit
 alias -g ls='ls -lart'
 alias -g la='ls -la'
