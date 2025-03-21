@@ -1,0 +1,31 @@
+[user]
+  name = mngste
+  email = mangouste@mosaurus.com
+
+# Help with typos
+[help]
+  autoCorrect = 20
+
+# Pull settings
+[pull]
+  ff = only
+  rebase = true
+
+# Default branch name
+[init]
+  defaultBranch = main
+
+# Fix conflicts only once
+[rerere]
+  enabled = true
+
+# Auto prune when fetching
+[fetch]
+  prune = true
+
+# GPG settings for SSH signing
+[gpg]
+  format = ssh
+
+[commit]
+  gpgsign = true
