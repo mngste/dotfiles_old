@@ -1,79 +1,97 @@
-# Performance optimizations
-DISABLE_AUTO_UPDATE="true"
-DISABLE_MAGIC_FUNCTIONS="true"
-DISABLE_COMPFIX="true"
+# Turn off “no match” errors
+setopt nonomatch
 
-# Cache completions aggressively
-autoload -Uz compinit
-if [ "$(date +'%j')" != "$(stat -f '%Sm' -t '%j' ~/.zcompdump 2>/dev/null)" ]; then
-    compinit
-else
-    compinit -C
+# Enable auto-cd
+setopt AUTO_CD
+
+### Added by Zinit's installer
+if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
+    print -P "%F{33} %F{220}Installing %F{33}ZDHARMA-CONTINUUM%F{220} Initiative Plugin Manager (%F{33}zdharma-continuum/zinit%F{220})…%f"
+    command mkdir -p "$HOME/.local/share/zinit" && command chmod g-rwX "$HOME/.local/share/zinit"
+    command git clone https://github.com/zdharma-continuum/zinit "$HOME/.local/share/zinit/zinit.git" && \
+        print -P "%F{33} %F{34}Installation successful.%f%b" || \
+        print -P "%F{160} The clone has failed.%f%b"
 fi
 
-# Oh My Zsh path
-export ZSH="$HOME/.oh-my-zsh"
+source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
+autoload -Uz _zinit
+(( ${+_comps} )) && _comps[zinit]=_zinit
 
-# Theme config - fixed syntax
-ZSH_THEME="cloud"
+# Load a few important annexes, without Turbo
+zinit light-mode for \
+    zdharma-continuum/zinit-annex-as-monitor \
+    zdharma-continuum/zinit-annex-bin-gem-node \
+    zdharma-continuum/zinit-annex-patch-dl \
+    zdharma-continuum/zinit-annex-rust
 
-# Spaceship settings (fixed syntax)
-SPACESHIP_PROMPT_ASYNC=true
-SPACESHIP_PROMPT_ADD_NEWLINE=true
-SPACESHIP_CHAR_SYMBOL="⚡"
+# Load Oh My Zsh libraries
+zinit lucid light-mode for \
+    OMZL::history.zsh \
+    OMZL::completion.zsh \
+    OMZL::key-bindings.zsh
 
-# Minimal spaceship sections for performance
-SPACESHIP_PROMPT_ORDER=(
-  time
-  user
-  dir
-  git
-  line_sep
-  char
-)
+# Fix for proot-distro library issues
+if [[ -z "$PREFIX" && "$PREFIX" != *"/com.termux/"* ]]; then
+    # Set LD_LIBRARY_PATH for proot environments if needed
+    export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/lib:/lib"
+    # Disable commands that might cause errors in proot
+    function fix_proot_cmd() {
+        if ! command -v $1 &> /dev/null; then
+            alias $1="echo '$1 not available in this proot environment'"
+        fi
+    }
+    # Fix commonly problematic commands
+    fix_proot_cmd uname
+    fix_proot_cmd sleep
+    fix_proot_cmd mkdir
+fi
 
-# Carefully ordered plugins (syntax highlighting must be last)
-plugins=(
-  git
-  zsh-autosuggestions
-  zsh-syntax-highlighting
-)
+# Ensure completion is properly initialized in Termux
+if [[ -n "$PREFIX" && "$PREFIX" = *"/com.termux/"* ]]; then
+  autoload -Uz compinit
+  compinit
+fi
 
-# Source Oh My Zsh
-source $ZSH/oh-my-zsh.sh
+# Load plugins with Turbo mode
+zinit wait lucid for \
+    zdharma-continuum/fast-syntax-highlighting \
+    OMZP::colored-man-pages \
+    OMZP::git
 
-# Autosuggest settings
-ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#663399,standout"
-ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE="20"
-ZSH_AUTOSUGGEST_USE_ASYNC=1
+zinit wait lucid for \
+    atload"!_zsh_autosuggest_start" \
+        zsh-users/zsh-autosuggestions
 
-# Alias expansion function
-globalias() {
-   if [[ $LBUFFER =~ '[a-zA-Z0-9]+$' ]]; then
-       zle _expand_alias
-       zle expand-word
-   fi
-   zle self-insert
-}
-zle -N globalias
-bindkey " " globalias
-bindkey "^[[Z" magic-space
-bindkey -M isearch " " magic-space
+# zsh-fzf-history-search
+zinit ice lucid wait
+zinit light joshskidmore/zsh-fzf-history-search
 
-# Lazy load SSH agent
-function _load_ssh_agent() {
-    if [ -z "$SSH_AUTH_SOCK" ]; then
-        eval "$(ssh-agent -s)" > /dev/null
-        ssh-add ~/.ssh/id_github_sign_and_auth 2>/dev/null
-    fi
-}
-autoload -U add-zsh-hook
-add-zsh-hook precmd _load_ssh_agent
+# real-time, fish-style type-ahead completion
+zinit light marlonrichert/zsh-autocomplete
 
-# Path configurations
-export VOLTA_HOME="$HOME/.volta"
-PATH="$VOLTA_HOME/bin:$PATH:/home/scott/.turso"
-export PATH
+# Make Tab and ShiftTab go to the menu
+bindkey              '^I' menu-select
+bindkey "$terminfo[kcbt]" menu-select
 
-# Source aliases last
-[ -f ~/.zsh_aliases ] && source ~/.zsh_aliases
+# Make Tab and ShiftTab change the selection in the menu
+bindkey -M menuselect              '^I'         menu-complete
+bindkey -M menuselect "$terminfo[kcbt]" reverse-menu-complete
+
+export PATH="$HOME/.local/bin:$PATH"
+if [[ -n "$PREFIX" && "$PREFIX" = *"/com.termux/"* ]]; then
+    export LD_LIBRARY_PATH="$PREFIX/lib:$LD_LIBRARY_PATH"
+fi
+# Load theme
+source "$HOME/.zsh-themes/td.zsh-theme"
+
+# Load a few important annexes, without Turbo
+# (this is currently required for annexes)
+zinit light-mode for \
+    zdharma-continuum/zinit-annex-as-monitor \
+    zdharma-continuum/zinit-annex-bin-gem-node \
+    zdharma-continuum/zinit-annex-patch-dl \
+    zdharma-continuum/zinit-annex-rust
+
+### End of Zinit's installer chunk
+[[ -f /data/data/com.termux/files/home/.shell_rc_content ]] && source /data/data/com.termux/files/home/.shell_rc_content
+[[ -f /data/data/com.termux/files/home/.zsh_aliases ]] && source /data/data/com.termux/files/home/.zsh_aliases
