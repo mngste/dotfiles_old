@@ -7,7 +7,7 @@ To change your login shell to fish:
 Add the shell to /etc/shells with:
 
 ```bash
-echo /usr/local/bin/fish | sudo tee -a /etc/shells
+echo ../usr/bin/fish | sudo tee -a /etc/shells
 ```
 
 Change your default shell with:
