@@ -1,0 +1,11 @@
+[core]
+	excludesFile = ~/.gitignore
+	autocrlf = input
+	editor = nvim
+[user]
+	name = mngste
+	email = mangouste@mosaurus.com
+[fetch]
+	prune = true
+[init]
+	defaultBranch = main
