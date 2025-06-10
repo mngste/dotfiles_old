@@ -6,3 +6,4 @@ install:
 dotfiles:
 	$(stow) git
 	$(stow) termux
+	$(stow) fonts
