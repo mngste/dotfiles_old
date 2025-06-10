@@ -13,7 +13,7 @@ echo ../usr/bin/fish | sudo tee -a /etc/shells
 Change your default shell with:
 
 ```bash
-chsh -s /usr/local/bin/fish
+chsh -s fish
 ```
 
 Again, substitute the path to fish for /usr/local/bin/fish - see 
